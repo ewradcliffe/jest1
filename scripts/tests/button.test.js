@@ -1,13 +1,24 @@
-const buttonClick = require('../button.js');
-const addition = require('../button.js');
+/**
+ * @jest-environment jsdom
+ */
 
-beforeEach(() => {
-    document.body.innerHTML = <p id='par'></p>
+const buttonClick = require("../button");
+
+beforeAll(() => {
+    let fs = require("fs");
+    let fileContents = fs.readFileSync("index.html", "utf-8");
+    document.open();
+    document.write(fileContents);
+    document.close();
 });
 
-describe('DOM tests', () =>{
-    test('expects p content to change', () => {
+describe("DOM tests", () => {
+    test("Expects content to change", () => {
         buttonClick();
-        expect(document.getElementById('par').innerHTML).toEqual('You Clicked'):
-    })
-})
+        expect(document.getElementById("par")
+            .innerHTML).toEqual("You Clicked");
+    });
+    test("h1 should exist", () => {
+        expect(document.getElementsByTagName("h1").length).toBe(1);
+    });
+});
